@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Rạp xiếc trung ương 12/14</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			/* a {
+				color: #8ff;
+			} */
+
+			#menu {
+				z-index: 0;
+				position: absolute;
+				bottom: 20px;
+				width: 100%;
+				text-align: center;
+			}
+
+			.element {
+				
+				
+				box-sizing: border-box;
+				/* width: 100%;
+				max-width: 33%;
+				height: auto; */
+				/* box-shadow: 0px 0px 12px rgba(0,255,255,0.5);
+				border: 1px solid rgba(127,255,255,0.25); */
+				width: 348.150px;
+				height: 227.462px;
+				font-family: Helvetica, sans-serif;
+				text-align: center!important;
+				line-height: normal;
+				cursor: default;
+			}
+
+			.element img{
+		
+			width: 156.663px;
+			height: 156.663px;
+			border-radius: 50%; 
+			border: 2px solid #a1a1a1; 
+			vertical-align: middle;
+			margin-bottom: 10px;
+    		/* max-width: 45%;
+    		height: auto;  */
+			}
+
+			
+/* 
+			.element img:hover {
+				box-shadow: 0px 0px 12px rgba(0,255,255,0.75);
+				border: 1px solid rgba(127,255,255,0.75);
+			} */
+
+				/* .element .number {
+					position: absolute;
+					top: 20px;
+					right: 20px;
+					font-size: 12px;
+					color: rgba(127,255,255,0.75);
+				} */
+
+				.element .symbol {
+					/* position: absolute;
+					top: 40px;
+					left: 0px;
+					right: 0px;
+					font-size: 60px;
+					font-weight: bold;
+					color: rgba(255,255,255,0.75);
+					text-shadow: 0 0 10px rgba(0,255,255,0.95); */
+					
+					font-weight: bold;
+					margin-bottom: 0;
+    				display: flex;
+    				align-items: center;
+    				justify-content: center;
+   					font-size: 18px;
+					margin-top: 0;
+					/* box-sizing: border-box; */
+				}
+
+				.element .details {
+					/* position: absolute;
+					bottom: 15px;
+					left: 0px;
+					right: 0px;
+					font-size: 12px;
+					color: rgba(127,255,255,0.75); */
+					
+					margin-top: 0;
+   				 	margin-bottom: 1rem;
+					font-size: 17px;
+					/* box-sizing: border-box; */
+				}
+				
+
+			button {
+				color: rgba(127,255,255,0.75);
+				background: transparent;
+				outline: 1px solid rgba(127,255,255,0.75);
+				border: 0px;
+				padding: 5px 10px;
+				cursor: pointer;
+			}
+
+			button:hover {
+				background-color: rgba(0,255,255,0.5);
+			}
+
+			button:active {
+				color: #000000;
+				background-color: rgba(0,255,255,0.75);
+			}
+		</style>
+	</head>
+	<header>
+	    <div class="video-container">
+		<video  id="myvid" autoplay >
+		<source src="3.mp4" type="video/mp4">
+		</video> 
+		</div>
+		<script> var delete_vid= setTimeout(function(){const element= document.getElementById("myvid");element.remove();},10000) </script> 
+	</header>
+	<body>
+		<div id="container"></div>
+		<div id="menu">
+			<button id="table">TABLE</button>
+			<button id="sphere">SPHERE</button>
+			<button id="helix">HELIX</button>
+			<button id="grid">GRID</button>
+		</div>
+
+		<!-- Import maps polyfill -->
+		<!-- Remove this when import maps will be widely supported -->
+	
+		<script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "./build/three.module.js",
+					"three/addons/": "./jsm/"
+				}
+			}
+		</script>
+
+		<script type="module">
+			
+			import * as THREE from 'three';
+
+			import { TWEEN } from 'three/addons/libs/tween.module.min.js';
+			import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
+			import { CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
+			
+			const table = [
+
+				'Châu Đình Anh', '27/08/2005', '1.jpg', 1, 1,'https://www.facebook.com/DanhHeno.2708' ,
+				'Nguyễn Mai Thảo Anh', '07/08/2005', '2.jpg', 3, 1, 'https://www.facebook.com/thaoanh.nguyenmai.10',
+				'Trần Mai Bảo Anh', '27/05/2005', 'ava.jpg', 5, 1, 'https://www.facebook.com/trmaibaoanh275',
+				'Dương Quỳnh Chi', '12/09/2005', '4.jpg', 7, 1, 'https://www.facebook.com/Chiduongquynhchi.1',
+				'Nguyễn Thành Công', '28/09/2005', '5.jpg', 9, 1, 'https://www.facebook.com/666gaming21',
+				'Đoàn Chí Dũng', '19/05/2005', '6.jpg', 11, 1, 'https://www.facebook.com/chidung7271',
+				'Ngô Hoàng Duy', '15/03/2005', '7.jpg', 13, 1, 'https://www.facebook.com/Vcutege',
+				'Nguyễn Đức Mạnh Đạt', '17/12/2005', '8.jpg', 15, 1, 'https://www.facebook.com/martinnnn.chubekhongda',
+				'Nguyễn Nguyên Hạo', '24/01/2005', '9.jpg', 17, 1, 'https://www.facebook.com/hao.nguyennguyen.1044186',
+				'Đào Ngọc Hân', '08/08/2005', '10.jpg', 19, 1, 'https://www.facebook.com/profile.php?id=100083849036881',
+				'Mai Thu Hiền', '23/04/2005', 'ava.jpg', 2, 3, 'https://www.facebook.com/profile.php?id=100045041700309',
+				'Phạm Hoàng Phi Hùng', '30/06/2005', '12.jpg', 4, 3, 'https://www.facebook.com/rabbits1166',
+				'Hoàng Nguyễn Khánh Huy', '02/05/2005', '13.jpg', 6, 3, 'https://www.facebook.com/khanhhuy.hoangnguyen.7',
+				'Phan Bá Đông Kha', '02/12/2005', '14.jpg', 8, 3, 'https://www.facebook.com/profile.php?id=100025113048593',
+				'Lê Đăng Khoa', '15/09/2005', '15.jpg', 10, 3, 'https://www.facebook.com/profile.php?id=100071325592339',
+				'Nguyễn Lê Đăng Khoa', '08/04/2005', 'ava.jpg', 12, 3, 'https://www.facebook.com/alakhoakkoipro',
+				'Nguyễn Bảo Khuyên', '08/10/2005', '17.jpg', 14, 3, 'https://www.facebook.com/khuyen.bao.18659041',
+				'Đoàn Trúc Linh', '20/07/2005', 'ava.jpg', 16, 3, 'https://www.facebook.com/trling.cutee',
+				'Nguyễn Phương Linh', '20/03/2005', '19.jpg', 18, 3, 'https://www.facebook.com/becky.nguyen.9862',
+				'Đào Thị Ái My', '04/11/2005', '20.jpg', 1, 5, 'https://www.facebook.com/aimy.dao.5',
+				'Nguyễn Hoàng Yến My', '07/10/2005', 'ava.jpg', 3, 5, 'https://www.facebook.com/profile.php?id=100021972981654',
+				'Nguyễn Thị Trà My', '16/03/2005', 'ava.jpg', 5, 5, 'https://www.facebook.com/profile.php?id=100084948964630',
+				'Thái Uyển Nhi', '22/07/2005', '23.jpg', 7, 5, 'https://www.facebook.com/uyennhi.thai.16',
+				'Trần Quốc Phú', '02/03/2005', '24.jpg', 9, 5, 'https://www.facebook.com/profile.php?id=100080486546319',
+				'Ngô Thiên Phúc', '15/07/2005', '25.jpg', 11, 5, 'https://www.facebook.com/neko.phucyun',
+				'Võ Thị Anh Phương', '25/02/2005', '26.jpg', 13, 5, 'https://www.facebook.com/ahnphuongvo',
+				'Nguyễn Huỳnh Thục Quyên', '18/06/2005', 'ava.jpg', 15, 5, 'https://www.facebook.com/profile.php?id=100040755735516',
+				'Phan Nhật Thanh', '25/12/2005', '28.jpg', 17, 5, 'https://www.facebook.com/profile.php?id=100028763144196',
+				'Lê Hồng Phương Thảo', '14/06/2005', 'ava.jpg', 19, 5, 'https://www.facebook.com/lthao7053',
+				'Trần Thị Mỹ Thuận', '17/09/2005', '30.jpg', 2, 7, 'https://www.facebook.com/mythuan.tra.5',
+				'Huỳnh Khánh Thư', '09/07/2005', '31.jpg', 4, 7, 'https://www.facebook.com/profile.php?id=100028959818815',
+				'Đặng Thị Thùy Trang', '09/02/2005', '32.jpg', 6, 7, 'https://www.facebook.com/profile.php?id=100013520492862',
+				'Đoàn Thị Xuân Trang', '04/02/2005', '33.jpg', 8, 7, 'https://www.facebook.com/trangdoan.0402.tp',
+				'Phạm Huy Trường', '17/07/2005', '34.jpg', 10, 7, 'https://www.facebook.com/profile.php?id=100030097102267',
+				'Mai Thảo Uyên', '08/01/2005', '35.jpg', 12, 7, 'https://www.facebook.com/profile.php?id=100017417374422',
+				'Nguyễn Thị Ánh Vy', '09/04/2005', 'ava.jpg', 14, 7, 'https://www.facebook.com/vyiudau',
+				'Phạm Thị Khánh Vy', '25/06/2005', '37.jpg', 16, 7, 'https://www.facebook.com/profile.php?id=100032112900493',
+				'Nguyễn Thị Minh Yến', '17/01/2005', '38.jpg', 18, 7, 'https://www.facebook.com/profile.php?id=100060221929824',
+				'Nguyễn Ngọc Phong', '10/10/2005', '39.jpg', 9, 9,'https://www.facebook.com/profile.php?id=100075660325006',
+				'Lê Nguyễn Tất Thành', '08/12/2005', '40.jpg', 11, 9, 'https://www.facebook.com/profile.php?id=100047428384119',
+			];
+
+			let camera, scene, renderer;
+			let controls;
+
+			const objects = [];
+			const targets = { table: [], sphere: [], helix: [], grid: [] };
+			setTimeout(function(){init(); animate();}, 11000);
+			
+
+			function init() {
+
+				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+				camera.position.z = 3000;
+
+				scene = new THREE.Scene();
+
+				// table
+
+				for ( let i = 0; i < table.length; i += 6 ) {
+		
+					
+					const element = document.createElement( 'div' );
+					element.className = 'element';
+				
+					// element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
+
+					const para=	document.createElement('a');
+					
+					para.id=table[i+1];
+					para.href = table[i+5];
+					para.target = "_blank";
+					para.rel="noopener";
+
+
+					element.appendChild(para);
+
+		
+					const img=	document.createElement('img');
+					img.src = table[i+2];
+					
+					para.appendChild(img);
+					// const dubleclick=document.getElementById(table[i+1]);
+					// dubleclick.addEventListener("dblclick", function(){
+					// window.location= 'https://stackoverflow.com/questions/4562012/make-a-link-open-on-double-click';
+					// });
+
+
+					// const number = document.createElement( 'div' );
+					// number.className = 'number';
+					// number.textContent = ( i / 5 ) + 1;
+					// element.appendChild( number );
+
+					const symbol = document.createElement( 'div' );
+					symbol.className = 'symbol';
+					symbol.textContent = table[ i ];
+					element.appendChild( symbol );
+
+					const details = document.createElement( 'div' );
+					details.className = 'details';
+					details.innerHTML = table[ i + 1 ] ;
+					element.appendChild( details );
+
+					const objectCSS = new CSS3DObject( element );
+					objectCSS.position.x = Math.random() * 4000 - 2000;
+					objectCSS.position.y = Math.random() * 4000 - 2000;
+					objectCSS.position.z = Math.random() * 4000 - 2000;
+					scene.add( objectCSS );
+
+					objects.push( objectCSS );
+
+					//
+
+					const object = new THREE.Object3D();
+					object.position.x = ( table[ i + 3 ] * 140 ) - 1330;
+					object.position.y = - ( table[ i + 4 ] * 180 ) + 990;
+
+					targets.table.push( object );
+
+				}
+
+				// sphere
+
+				const vector = new THREE.Vector3();
+
+				for ( let i = 0, l = objects.length; i < l; i ++ ) {
+
+					const phi = Math.acos( - 1 + ( 2 * i ) / l );
+					const theta = Math.sqrt( l * Math.PI ) * phi;
+
+					const object = new THREE.Object3D();
+
+					object.position.setFromSphericalCoords( 800, phi, theta );
+
+					vector.copy( object.position ).multiplyScalar( 2 );
+
+					object.lookAt( vector );
+
+					targets.sphere.push( object );
+
+				}
+
+				// helix
+
+				for ( let i = 0, l = objects.length; i < l; i ++ ) {
+
+					const theta = i * 0.175 + Math.PI;
+					const y = - ( i * 8 ) + 450;
+
+					const object = new THREE.Object3D();
+
+					object.position.setFromCylindricalCoords( 1200, theta, y );
+
+					vector.x = object.position.x * 2;
+					vector.y = object.position.y ;
+					vector.z = object.position.z * 2;
+
+					object.lookAt( vector );
+
+					targets.helix.push( object );
+
+				}
+
+				// grid
+
+				for ( let i = 0; i < objects.length; i ++ ) {
+
+					const object = new THREE.Object3D();
+
+					object.position.x = ( ( i % 5 ) * 400 ) - 800;
+					object.position.y = ( - ( Math.floor( i / 5 ) % 5 ) * 400 ) + 800;
+					object.position.z = ( Math.floor( i / 25 ) ) * 1000 - 2000;
+
+					targets.grid.push( object );
+
+				}
+
+				//
+
+				renderer = new CSS3DRenderer();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				document.getElementById( 'container' ).appendChild( renderer.domElement );
+
+				//
+
+				controls = new TrackballControls( camera, renderer.domElement );
+				controls.minDistance = 500;
+				controls.maxDistance = 6000;
+				controls.addEventListener( 'change', render );
+
+				const buttonTable = document.getElementById( 'table' );
+				buttonTable.addEventListener( 'click', function () {
+
+					transform( targets.table, 2000 );
+
+				} );
+
+				const buttonSphere = document.getElementById( 'sphere' );
+				buttonSphere.addEventListener( 'click', function () {
+
+					transform( targets.sphere, 2000 );
+
+				} );
+
+				const buttonHelix = document.getElementById( 'helix' );
+				buttonHelix.addEventListener( 'click', function () {
+
+					transform( targets.helix, 2000 );
+
+				} );
+
+				const buttonGrid = document.getElementById( 'grid' );
+				buttonGrid.addEventListener( 'click', function () {
+
+					transform( targets.grid, 2000 );
+
+				} );
+
+				transform( targets.table, 2000 );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize );
+				
+					
+
+			}
+
+			function transform( targets, duration ) {
+
+				TWEEN.removeAll();
+
+				for ( let i = 0; i < objects.length; i ++ ) {
+
+					const object = objects[ i ];
+					const target = targets[ i ];
+
+					new TWEEN.Tween( object.position )
+						.to( { x: target.position.x, y: target.position.y, z: target.position.z }, Math.random() * duration + duration )
+						.easing( TWEEN.Easing.Exponential.InOut )
+						.start();
+
+					new TWEEN.Tween( object.rotation )
+						.to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, Math.random() * duration + duration )
+						.easing( TWEEN.Easing.Exponential.InOut )
+						.start();
+
+				}
+
+				new TWEEN.Tween( this )
+					.to( {}, duration * 2 )
+					.onUpdate( render )
+					.start();
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				render();
+
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				TWEEN.update();
+
+				controls.update();
+
+			}
+
+			function render() {
+
+				renderer.render( scene, camera );
+
+			}
+
+
+	
+		</script>
+
+	</body>
+</html>
+			
