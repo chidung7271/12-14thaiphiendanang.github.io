@@ -409,7 +409,7 @@ class TrackballControls extends EventDispatcher {
 
 			if ( _pointers.length === 0 ) {
 
-				scope.domElement.setPointerCapture( event.pointerId );
+				// scope.domElement.setPointerCapture( event.pointerId );
 
 				scope.domElement.addEventListener( 'pointermove', onPointerMove );
 				scope.domElement.addEventListener( 'pointerup', onPointerUp );
@@ -779,7 +779,7 @@ class TrackballControls extends EventDispatcher {
 		this.dispose = function () {
 
 			scope.domElement.removeEventListener( 'contextmenu', contextmenu );
-
+			scope.domElement.removeEventListener( 'pointerdown', onPointerDown );
 			
 			scope.domElement.removeEventListener( 'pointercancel', onPointerCancel );
 			scope.domElement.removeEventListener( 'wheel', onMouseWheel );
@@ -793,7 +793,7 @@ class TrackballControls extends EventDispatcher {
 		};
 
 		this.domElement.addEventListener( 'contextmenu', contextmenu );
-
+		this.domElement.addEventListener( 'pointerdown', onPointerDown );
 		
 		this.domElement.addEventListener( 'pointercancel', onPointerCancel );
 		this.domElement.addEventListener( 'wheel', onMouseWheel, { passive: false } );
