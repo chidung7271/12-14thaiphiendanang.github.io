@@ -5,6 +5,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link type="text/css" rel="stylesheet" href="main.css">
+		<link rel="shortcut icon" type="image/png" href="lop.png"/>
 		<style>
 			/* a {
 				color: #8ff;
@@ -118,11 +119,26 @@
 	</head>
 	<header>
 	    <div class="video-container">
-		<video  id="myvid" autoplay >
-		<source src="3.mp4" type="video/mp4">
-		</video> 
+			<div id="vid_audio">
+			<video  id="myvid" autoplay muted>
+				<source src="3.mp4" type="video/mp4">
+				<source src="3.webm" type="video/webm">
+			</video> 
+			<audio  id="player"  muted >
+				<source src="3.wav" type="audio/wav">
+				<source src="3.webm" type="audio/webm">
+			</audio>
+			</div>
 		</div>
-		<script> var delete_vid= setTimeout(function(){const element= document.getElementById("myvid");element.remove();},6000) </script> 
+		<script>	
+			setTimeout(function(){
+			data=document.querySelector('#player');
+			data.volume = 0.7;
+			data.play();
+			data.muted=false;
+			},2000);
+		</script>
+		<script> var delete_vid= setTimeout(function(){const element= document.getElementById("myvid");element.remove();},8000) </script> 
 	</header>
 	<body>
 		<div id="container"></div>
@@ -204,7 +220,7 @@
 
 			const objects = [];
 			const targets = { table: [], sphere: [], helix: [], grid: [] };
-			setTimeout(function(){init(); animate();}, 6000);
+			setTimeout(function(){init(); animate();}, 9000);
 			
 
 			function init() {

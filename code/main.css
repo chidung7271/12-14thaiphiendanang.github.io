@@ -54,6 +54,7 @@ button {
 
 button, input,a,select {
 	pointer-events: auto;
+	user-select: none;
 }
 
 .lil-gui {
